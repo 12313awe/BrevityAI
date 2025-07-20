@@ -1,0 +1,78 @@
+Bu komut dosyası, AI Destekli Özetleyici ve Not Çıkarıcı Platformu için geliştirme ortamını kurmak için gerekli adımları içerir.
+
+# AI Destekli Özetleyici ve Not Çıkarıcı Platform — Ortam Kurulumu
+
+Bu doküman, AI Destekli Özetleyici ve Not Çıkarıcı Platformu projesinin geliştirme ortamını kurmak için gereken komutları ve adımları listelemektedir. Proje Next.js, TypeScript ve Tailwind CSS kullanılarak geliştirilecektir.
+
+---
+
+## 1. Node.js ve npm/Yarn Kurulumu (Eğer kurulu değilse):
+
+Projenin çalışması için Node.js ve bir paket yöneticisi (npm veya Yarn) gereklidir. Önerilen sürümler:
+
+*   Node.js: v18.x veya daha yüksek
+*   npm: v9.x veya daha yüksek
+*   Yarn: v1.x veya v3.x (Berry)
+
+Kurulum için Node.js resmi web sitesini ziyaret edebilirsiniz: [https://nodejs.org/](https://nodejs.org/)
+
+## 2. Yeni Bir Next.js Projesi Oluşturma:
+
+Next.js projesini oluşturmak için aşağıdaki komutu kullanın. Bu komut, TypeScript, ESLint ve Tailwind CSS ile önceden yapılandırılmış bir proje kuracaktır.
+
+```bash
+npx create-next-app@latest ai-summarizer-notes-app --typescript --eslint --tailwind --use-npm # npm kullanıyorsanız
+# veya
+# yarn create next-app ai-summarizer-notes-app --typescript --eslint --tailwind --use-yarn # yarn kullanıyorsanız
+```
+
+**Açıklama:**
+*   `ai-summarizer-notes-app`: Oluşturulacak projenin klasör adı.
+*   `--typescript`: TypeScript desteği ekler.
+*   `--eslint`: ESLint yapılandırması ekler.
+*   `--tailwind`: Tailwind CSS yapılandırması ekler.
+*   `--use-npm` / `--use-yarn`: Belirtilen paket yöneticisini kullanır.
+
+## 3. Proje Klasörüne Geçiş:
+
+Proje oluşturulduktan sonra, oluşturulan dizine gidin:
+
+```bash
+cd ai-summarizer-notes-app
+```
+
+## 4. Ek Bağımlılıkların Kurulumu (Gerekirse):
+
+IndexedDB veya diğer özel kütüphaneler için ek bağımlılıklar gerekebilir. Örneğin, IndexedDB için basit bir wrapper kullanacaksanız:
+
+```bash
+npm install localforage # veya IndexedDB'yi kolaylaştıran başka bir kütüphane
+# veya
+# yarn add localforage
+```
+
+## 5. Geliştirme Sunucusunu Başlatma:
+
+Uygulamayı yerel geliştirme ortamında çalıştırmak için:
+
+```bash
+npm run dev
+# veya
+# yarn dev
+```
+
+Bu komut, uygulamayı `http://localhost:3000` adresinde başlatacaktır.
+
+## 6. Git Deposu Başlatma (İsteğe Bağlı):
+
+Eğer bir Git deposu başlatmak isterseniz (varsayılan olarak `create-next-app` yapabilir):
+
+```bash
+git init
+git add .
+git commit -m "Initial commit: AI Summarizer & Note Taker App setup"
+```
+
+---
+
+Bu adımlar, projeniz için temel geliştirme ortamını başarıyla kurmanıza yardımcı olacaktır.

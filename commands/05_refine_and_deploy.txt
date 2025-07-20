@@ -1,0 +1,70 @@
+Bu komut dosyası, AI Destekli Özetleyici ve Not Çıkarıcı Platformu'nun son gözden geçirme, optimizasyon ve dağıtım adımlarını içerir.
+
+# AI Destekli Özetleyici ve Not Çıkarıcı Platform — İyileştirme ve Dağıtım
+
+Bu doküman, AI Destekli Özetleyici ve Not Çıkarıcı Platformu projesini üretim ortamına dağıtmadan önce yapılması gereken son iyileştirmeleri, testleri ve dağıtım adımlarını içermektedir. Projenin Next.js ile geliştirildiği ve Vercel/Netlify gibi serverless platformlarda barındırılacağı göz önünde bulundurularak adımlar belirlenmiştir.
+
+---
+
+## 1. Kod İncelemesi ve Optimizasyonlar:
+
+*   **Genel Kod İncelemesi:** Tüm kod tabanı, temiz kod prensipleri (`03_rules.md`) ve performans yönergeleri (`08_ui_ux_guidelines.md`) açısından gözden geçirilmelidir.
+*   **Performans Optimizasyonları:**
+    *   **Gereksiz Render'lardan Kaçınma:** React bileşenlerinde `memo` veya `useCallback`/`useMemo` kullanarak gereksiz yeniden render'lar minimize edilmelidir.
+    *   **Lazy Loading:** Sayfa boyutunu küçültmek ve başlangıç yükleme süresini hızlandırmak için büyük bileşenler veya modüller `React.lazy` ve `Suspense` ile veya Next.js'in dinamik import özellikleri ile tembel yükleme (lazy loading) yapılmalıdır.
+    *   **Resim Optimizasyonu (Varsa):** Eğer ileride resim yükleme özelliği eklenirse, Next.js'in `Image` bileşeni gibi optimizasyon araçları kullanılmalıdır.
+*   **Erişilebilirlik Denetimi:** Lighthouse veya benzeri araçlarla (tarayıcı geliştirici araçlarında mevcut) erişilebilirlik denetimi yapılmalı ve tüm öneriler uygulanmalıdır.
+*   **SEO Optimizasyonu (Varsa):** Next.js'in `next/head` veya App Router'da `metadata` API'ı kullanarak sayfa başlıkları, açıklamaları ve diğer meta etiketler optimize edilmelidir (ileriye dönük bir adım).
+
+## 2. Testler:
+
+*   **Fonksiyonel Testler:** Tüm temel özelliklerin (metin özetleme, not çıkarma, kaydetme, düzenleme, silme, ayarlar) beklendiği gibi çalıştığından emin olunmalıdır.
+*   **Kullanılabilirlik Testleri:** Farklı cihazlarda (masaüstü, tablet, mobil) ve tarayıcılarda (Chrome, Firefox, Safari, Edge) uygulamanın kullanıcı deneyimi test edilmelidir.
+*   **Performans Testleri:** Lighthouse veya Google PageSpeed Insights gibi araçlarla performans skorları kontrol edilmeli, `02_project_overview.md` dosyasındaki KPI hedeflerine ulaşılmaya çalışılmalıdır.
+*   **Güvenlik Testleri:** `04_security_audit.txt` komutu ile oluşturulan raporun bulguları doğrultusunda gerekli düzeltmelerin yapıldığı ve ek bir güvenlik denetimi yapıldığı teyit edilmelidir.
+
+## 3. Ortam Değişkenleri Yönetimi:
+
+*   **Gemini API Anahtarı:** Kullanıcının Ayarlar sayfasında girdiği Gemini API anahtarı, client-side güvenli bir şekilde (örneğin `localStorage` veya `IndexedDB` içinde) saklanmalıdır. **Asla kod tabanına gömülmemelidir.** Dağıtım ortamında (Vercel/Netlify) kullanılacak API anahtarları için `NEXT_PUBLIC_` önekli ortam değişkenleri kullanılabilir, ancak projeniz client-side olduğu için kullanıcı girişi daha ön plandadır.
+
+## 4. Dağıtım (Deployment):
+
+Proje, Vercel veya Netlify gibi serverless platformlarda statik olarak barındırılacaktır.
+
+### 4.1. Vercel'e Dağıtım:
+
+1.  **Vercel CLI Kurulumu (Eğer kurulu değilse):**
+    ```bash
+npm install -g vercel
+    ```
+2.  **Vercel'e Giriş:**
+    ```bash
+vercel login
+    ```
+3.  **Projenizi Dağıtma:** Proje klasörünüzdeyken:
+    ```bash
+vercel
+    ```
+    *   Vercel, projenizi otomatik olarak algılayacak (Next.js) ve size bazı sorular soracaktır (proje adı, dizin vb.). Varsayılanları onaylayabilirsiniz.
+    *   İlk dağıtım sonrası, her `git push` işleminde otomatik dağıtım yapılandırılacaktır.
+
+### 4.2. Netlify'a Dağıtım:
+
+1.  **Netlify CLI Kurulumu (Eğer kurulu değilse):**
+    ```bash
+npm install -g netlify-cli
+    ```
+2.  **Netlify'a Giriş:**
+    ```bash
+netlify login
+    ```
+3.  **Projenizi Dağıtma:** Proje klasörünüzdeyken:
+    ```bash
+netlify deploy --prod # Üretim ortamına dağıtmak için
+    ```
+    *   Netlify, projenizi kurmak için birkaç soru soracaktır. Build komutu olarak `next build` ve publish dizini olarak `out` (Next.js statik dışa aktarım için) veya `.next` (Next.js serverless için) belirtebilirsiniz.
+    *   Git entegrasyonu için Netlify web arayüzünü kullanmanız önerilir.
+
+---
+
+Bu adımlar tamamlandığında, "AI Destekli Özetleyici ve Not Çıkarıcı Platform" projeniz yayına hazır olacaktır.

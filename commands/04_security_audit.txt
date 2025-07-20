@@ -1,0 +1,33 @@
+Bu komut dosyası, AI Destekli Özetleyici ve Not Çıkarıcı Platformu için güvenlik denetimi yapmaya yönelik komutları içerir.
+
+# AI Destekli Özetleyici ve Not Çıkarıcı Platform — Güvenlik Denetimi
+
+Bu doküman, AI Destekli Özetleyici ve Not Çıkarıcı Platformu projesinde güvenlik açıklarını tespit etmek ve `03_rules.md` ile `06_software_architecture.md` dosyalarında belirtilen güvenlik prensiplerine uyumu kontrol etmek için yürütülecek komutları listelemektedir. Proje tamamen client-side çalıştığı ve hassas kullanıcı verilerini yerel olarak depoladığı için bu denetim kritik öneme sahiptir.
+
+---
+
+**Komut Açıklaması:**
+
+Bu komut, `security_audit.tpl` şablonunu kullanarak yapay zekadan, projenin kaynak kodunu (özellikle API anahtarı yönetimi, veri depolama ve dış API çağrıları ile ilgili kısımları) güvenlik açısından denetlemesini ister. Denetim, `03_rules.md` dosyasındaki güvenlik protokolleri ve yasaklar ile `06_software_architecture.md` dosyasındaki veri akışı ve depolama prensipleri göz önünde bulundurularak yapılacaktır. Oluşturulan güvenlik denetimi raporu `output/reports/security_audit_report.md` dosyasına kaydedilecektir.
+
+**Yürütme Talimatı:**
+
+```bash
+python security_audit.py \
+  --prompt-template prompts/security_audit.tpl \
+  --output-file output/reports/security_audit_report.md \
+  --context-files context/01_persona.md,context/02_project_overview.md,context/03_rules.md,context/05_tech_stack.md,context/06_software_architecture.md \
+  --model-params "model=gemini-1.5-pro-latest,temperature=0.4" \
+  --scope-description "AI Destekli Özetleyici ve Not Çıkarıcı Platformu'nun client-side çalışma prensibi, Gemini API anahtarı yönetimi ve IndexedDB/localStorage veri depolama mekanizmalarına odaklanarak güvenlik denetimi yap."
+```
+
+**Açıklama:**
+*   `--prompt-template`: Güvenlik denetimi için kullanılacak prompt şablonu.
+*   `--output-file`: Oluşturulan güvenlik raporunun kaydedileceği dosya.
+*   `--context-files`: Güvenlik prensipleri ve mimari detayları sağlayan bağlam dosyaları.
+*   `--model-params`: Yapay zeka modelinin ayarları.
+*   `--scope-description`: Denetimin kapsamı ve odak noktaları. Özellikle API anahtarlarının güvenliğine ve client-side depolanan verilerin gizliliğine vurgu yapılmalıdır.
+
+---
+
+Bu komutun çıktısı, projenin güvenlik duruşunu değerlendirmek ve potansiyel zafiyetleri gidermek için bir temel sağlayacaktır. Raporda tespit edilen tüm güvenlik açıkları ciddiyetine göre sınıflandırılmalı ve düzeltme önerileri sunulmalıdır.

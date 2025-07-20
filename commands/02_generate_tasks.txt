@@ -1,0 +1,33 @@
+Bu komut dosyası, AI Destekli Özetleyici ve Not Çıkarıcı Platformu için detaylı bir görev listesi oluşturmak amacıyla kullanılır.
+
+# AI Destekli Özetleyici ve Not Çıkarıcı Platform — Görev Oluşturma
+
+Bu doküman, projenin geliştirme sürecini adım adım yönetmek için detaylı bir görev listesi (task list) oluşturmaya yönelik komutları içermektedir. Bu görev listesi, proje açıklamasını, teknoloji yığınını ve mimari prensipleri temel alarak derlenecektir.
+
+---
+
+**Komut Açıklaması:**
+
+Bu komut, `generate_tasklist.tpl` şablonunu kullanarak yapay zekadan, "AI Destekli Özetleyici ve Not Çıkarıcı Platform" projesini geliştirmek için kapsamlı, mantıksal ve önceliklendirilmiş bir görev listesi oluşturmasını ister. Oluşturulan görev listesi `output/reports/task_list.md` dosyasına kaydedilecektir.
+
+**Yürütme Talimatı:**
+
+```bash
+python generate_tasks.py \
+  --prompt-template prompts/generate_tasklist.tpl \
+  --output-file output/reports/task_list.md \
+  --context-files context/01_persona.md,context/02_project_overview.md,context/03_rules.md,context/04_site_structure.md,context/05_tech_stack.md,context/06_software_architecture.md,context/07_content_guidelines.md,context/08_ui_ux_guidelines.md \
+  --model-params "model=gemini-1.5-pro-latest,temperature=0.7" \
+  --task-description "AI Destekli Özetleyici ve Not Çıkarıcı Platformu için tam geliştirme sürecini kapsayan, Next.js, TypeScript, Tailwind CSS, Gemini API ve IndexedDB kullanılan client-side bir web uygulaması oluşturmak için detaylı, adım adım bir görev listesi oluştur."
+```
+
+**Açıklama:**
+*   `--prompt-template`: Görev listesi oluşturmak için kullanılacak prompt şablonu.
+*   `--output-file`: Oluşturulan görev listesinin kaydedileceği dosya.
+*   `--context-files`: Proje hakkında bilgi sağlayan tüm bağlam dosyaları. Bu dosyalar, yapay zekanın projeyi tam olarak anlamasına yardımcı olur.
+*   `--model-params`: Yapay zeka modelinin ayarları (model adı ve sıcaklık).
+*   `--task-description`: Yapay zekadan istenen görevin kısa açıklaması. Bu, AI'ın odaklanmasını sağlar.
+
+---
+
+Bu komutun çıktısı, projenin uygulanması sırasında takip edilecek yol haritasını sağlayacaktır.

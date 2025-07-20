@@ -1,0 +1,35 @@
+Bu komut dosyası, AI Destekli Özetleyici ve Not Çıkarıcı Platformu projesindeki görevleri adım adım yürütmek için kullanılır.
+
+# AI Destekli Özetleyici ve Not Çıkarıcı Platform — Görev Yürütme
+
+Bu doküman, `output/reports/task_list.md` dosyasında oluşturulan görev listesindeki maddeleri sırayla ve sistemli bir şekilde yerine getirmek için kullanılacak komutları içermektedir. Bu sayede projenin her bir aşaması, bağlam dosyalarında belirtilen prensiplere uygun olarak tamamlanacaktır.
+
+---
+
+**Komut Açıklaması:**
+
+Bu komut, `execute_task.tpl` şablonunu kullanarak yapay zekadan, `task_list.md` dosyasında belirtilen bir görevi gerçekleştirmesini ister. Yapay zeka, görevi yerine getirirken projenin tüm bağlam dosyalarını (`context` klasöründeki tüm dosyalar) referans alacaktır. Bu, görevin proje hedefleri ve kısıtlamalarıyla uyumlu olmasını sağlar.
+
+**Yürütme Talimatı:**
+
+Aşağıdaki komutu kullanarak, `task_list.md` dosyasındaki belirli bir görevi (örneğin, ilk görevi) yürütmek için AI'dan yardım isteyebilirsiniz. `"[Yürütülecek Görev Tanımı]"` yerine `task_list.md` dosyasından kopyalayacağınız görevin tam tanımını yapıştırmanız gerekmektedir.
+
+```bash
+python execute_task.py \
+  --prompt-template prompts/execute_task.tpl \
+  --task-list-file output/reports/task_list.md \
+  --context-files context/01_persona.md,context/02_project_overview.md,context/03_rules.md,context/04_site_structure.md,context/05_tech_stack.md,context/06_software_architecture.md,context/07_content_guidelines.md,context/08_ui_ux_guidelines.md \
+  --model-params "model=gemini-1.5-pro-latest,temperature=0.7" \
+  --task-description "[Yürütülecek Görev Tanımı]" # Örneğin: "[ ] Ana Sayfa (/) için src/app/page.tsx dosyasını ve ilgili organizma bileşenlerini oluştur."
+```
+
+**Açıklama:**
+*   `--prompt-template`: Görev yürütmek için kullanılacak prompt şablonu.
+*   `--task-list-file`: Görev listesinin bulunduğu dosya. Yapay zeka, bu dosyayı mevcut görevlerin genel bağlamını anlamak için kullanabilir.
+*   `--context-files`: Proje hakkında bilgi sağlayan tüm bağlam dosyaları.
+*   `--model-params`: Yapay zeka modelinin ayarları.
+*   `--task-description`: Yürütülecek görevin tam tanımı. Bu, görev listesinden birebir kopyalanmalıdır.
+
+---
+
+Her görevi tamamladıktan sonra, `task_list.md` dosyasındaki ilgili onay kutusunu işaretlemeyi unutmayın (örn: `[x]`).
